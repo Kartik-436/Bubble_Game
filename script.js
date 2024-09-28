@@ -1,7 +1,7 @@
 var score = 0;
 var timer = 60;
 var hitrn;
-
+var tl = gsap.timeline();
 
 function makeBubble(){
     var clutter = "";
@@ -16,8 +16,7 @@ function makeBubble(){
     pbtm.innerHTML = clutter;
 }
 
-
-function runTimer(){
+async function runTimer(){
     var t = setInterval(() => {
         if (timer > 0) {
             timer--;
@@ -31,20 +30,17 @@ function runTimer(){
     }, 1000);
 }
 
-
 function newHit(){
     hitrn = Math.ceil(Math.random() * 10);
     var hit = document.querySelector("#hitVal");
     hit.textContent = hitrn;
 }
 
-
 function increaseScore(){
     score += 10;
     var sc = document.querySelector("#scoreVal");
     sc.textContent = score; 
 }
-
 
 function decreaseScore(){
     score -= 5;
@@ -56,10 +52,42 @@ function decreaseScore(){
     document.querySelector("#scoreVal").textContent = score;
 }
 
-
 makeBubble();
 newHit();
-runTimer();
+
+tl.from("#panel", {
+    duration: 1,
+    x: 200,
+    opacity: 0,
+    ease: "power2.inOut",
+})
+
+tl.from("#ptop", {
+    duration: 1,
+    x: -500,
+    opacity: 0,
+    ease: "power2.inOut",
+})
+
+tl.from(".bubble", {
+    duration: 1,
+    y: 200,
+    opacity: 0,
+    ease: "power2.inOut",
+    stagger: 0.02
+})
+
+tl.from(".elem, .box", {
+    duration: 0.5,
+    y: -50,
+    opacity: 0,
+    duration: 0.5,
+    Delay: 0.5
+})
+
+tl.eventCallback("onComplete", function() {
+    runTimer();
+});
 
 document.querySelector("#pbtm").addEventListener('click', function(details)
 {
