@@ -2,6 +2,18 @@ var score = 0;
 var timer = 60;
 var hitrn;
 var tl = gsap.timeline();
+var cursor = document.querySelector("#bubble");
+var main = document.querySelector("#main2");
+
+main.addEventListener('mousemove', function(details){
+    gsap.to(cursor, {
+        x: details.x,
+        y: details.y,
+        duration: 0.4,
+        ease: "back.out"
+    })
+})
+
 
 function makeBubble(){
     var clutter = "";
@@ -51,6 +63,7 @@ function decreaseScore(){
 
     document.querySelector("#scoreVal").textContent = score;
 }
+
 
 makeBubble();
 newHit();
